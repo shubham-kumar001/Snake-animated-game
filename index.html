@@ -3,571 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS SNAKE | Professional Gaming Platform</title>
-    <link rel="stylesheet" href="style.css">
+    <title>QUANTUMSERPENT | Pro Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="game-container">
-        <!-- Loading Screen -->
-        <div id="loading-screen" class="loading-screen">
-            <div class="loading-content">
-                <div class="loading-logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-infinity"></i>
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- Animated Background Elements -->
+        <div class="particles-bg" id="particles-bg"></div>
+        
+        <!-- Game UI -->
+        <div class="game-ui">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <div class="logo-text">
+                        <span class="logo-char">Q</span>
+                        <span class="logo-char">U</span>
+                        <span class="logo-char">A</span>
+                        <span class="logo-char">N</span>
+                        <span class="logo-char">T</span>
+                        <span class="logo-char">U</span>
+                        <span class="logo-char">M</span>
+                        <span class="logo-dash">-</span>
+                        <span class="logo-char">S</span>
+                        <span class="logo-char">E</span>
+                        <span class="logo-char">R</span>
+                        <span class="logo-char">P</span>
+                        <span class="logo-char">E</span>
+                        <span class="logo-char">N</span>
+                        <span class="logo-char">T</span>
                     </div>
-                    <h1>NEXUS<span class="accent">SNAKE</span></h1>
+                    <div class="logo-subtitle">NEURAL NETWORK EDITION</div>
                 </div>
-                <div class="loading-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
+                
+                <div class="player-stats">
+                    <div class="stat">
+                        <div class="stat-label">AGENT</div>
+                        <div class="stat-value">7A9B</div>
                     </div>
-                    <div class="loading-text" id="loading-text">Initializing Quantum Engine...</div>
+                    <div class="stat">
+                        <div class="stat-label">NEURAL LINK</div>
+                        <div class="stat-value active">ACTIVE</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">UPTIME</div>
+                        <div class="stat-value" id="uptime">00:00:00</div>
+                    </div>
                 </div>
-                <div class="loading-tips">
-                    <div class="tip">
-                        <i class="fas fa-lightbulb"></i>
-                        <span>Pro Tip: Collect golden orbs for time extension</span>
+            </div>
+
+            <!-- Left Sidebar -->
+            <div class="sidebar left-sidebar">
+                <!-- Performance Monitor -->
+                <div class="widget performance">
+                    <div class="widget-header">
+                        <i class="fas fa-microchip"></i>
+                        <h3>SYSTEM LOAD</h3>
+                        <div class="widget-indicator pulse"></div>
+                    </div>
+                    <div class="performance-metrics">
+                        <div class="metric">
+                            <div class="metric-label">NEURAL CPU</div>
+                            <div class="metric-bar">
+                                <div class="bar-fill" id="cpu-bar" data-value="45"></div>
+                            </div>
+                            <div class="metric-value" id="cpu-value">45%</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">QUANTUM GPU</div>
+                            <div class="metric-bar">
+                                <div class="bar-fill" id="gpu-bar" data-value="38"></div>
+                            </div>
+                            <div class="metric-value" id="gpu-value">38%</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">MEMORY</div>
+                            <div class="metric-bar">
+                                <div class="bar-fill" id="mem-bar" data-value="62"></div>
+                            </div>
+                            <div class="metric-value" id="mem-value">62%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Stats -->
+                <div class="widget game-stats">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-network"></i>
+                        <h3>GAME STATS</h3>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-name">SCORE</div>
+                                <div class="stat-value-large" id="score">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-name">SPEED</div>
+                                <div class="stat-value-large" id="speed">1.0x</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-link"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-name">LENGTH</div>
+                                <div class="stat-value-large" id="length">3</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-atom"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-name">PARTICLES</div>
+                                <div class="stat-value-large" id="particles">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Ups -->
+                <div class="widget powerups">
+                    <div class="widget-header">
+                        <i class="fas fa-rocket"></i>
+                        <h3>POWER SYSTEMS</h3>
+                    </div>
+                    <div class="powerup-grid">
+                        <div class="powerup" id="shield-power">
+                            <div class="powerup-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="powerup-info">
+                                <div class="powerup-name">QUANTUM SHIELD</div>
+                                <div class="powerup-status ready">READY</div>
+                                <div class="powerup-key">[S]</div>
+                            </div>
+                            <div class="powerup-cooldown"></div>
+                        </div>
+                        <div class="powerup" id="boost-power">
+                            <div class="powerup-icon"><i class="fas fa-forward"></i></div>
+                            <div class="powerup-info">
+                                <div class="powerup-name">TIME WARP</div>
+                                <div class="powerup-status ready">READY</div>
+                                <div class="powerup-key">[B]</div>
+                            </div>
+                            <div class="powerup-cooldown"></div>
+                        </div>
+                        <div class="powerup" id="teleport-power">
+                            <div class="powerup-icon"><i class="fas fa-random"></i></div>
+                            <div class="powerup-info">
+                                <div class="powerup-name">QUANTUM JUMP</div>
+                                <div class="powerup-status ready">READY</div>
+                                <div class="powerup-key">[Q]</div>
+                            </div>
+                            <div class="powerup-cooldown"></div>
+                        </div>
+                        <div class="powerup" id="magnet-power">
+                            <div class="powerup-icon"><i class="fas fa-magnet"></i></div>
+                            <div class="powerup-info">
+                                <div class="powerup-name">PARTICLE MAGNET</div>
+                                <div class="powerup-status ready">READY</div>
+                                <div class="powerup-key">[M]</div>
+                            </div>
+                            <div class="powerup-cooldown"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="sidebar right-sidebar">
+                <!-- Leaderboard -->
+                <div class="widget leaderboard">
+                    <div class="widget-header">
+                        <i class="fas fa-globe-americas"></i>
+                        <h3>GLOBAL LEADERBOARD</h3>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboard">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="widget controls">
+                    <div class="widget-header">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>CONTROLS</h3>
+                    </div>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="pause-btn">
+                            <i class="fas fa-pause"></i>
+                            <span>PAUSE</span>
+                        </button>
+                        <button class="control-btn" id="restart-btn">
+                            <i class="fas fa-redo"></i>
+                            <span>RESTART</span>
+                        </button>
+                        <button class="control-btn" id="sound-btn">
+                            <i class="fas fa-volume-up"></i>
+                            <span>SOUND</span>
+                        </button>
+                        <button class="control-btn" id="help-btn">
+                            <i class="fas fa-question"></i>
+                            <span>HELP</span>
+                        </button>
+                    </div>
+                    <div class="movement-hint">
+                        <div class="hint-text">MOVEMENT CONTROLS</div>
+                        <div class="arrow-grid">
+                            <div class="arrow-cell"></div>
+                            <div class="arrow-cell up" data-key="W"><i class="fas fa-arrow-up"></i></div>
+                            <div class="arrow-cell"></div>
+                            <div class="arrow-cell left" data-key="A"><i class="fas fa-arrow-left"></i></div>
+                            <div class="arrow-cell center"></div>
+                            <div class="arrow-cell right" data-key="D"><i class="fas fa-arrow-right"></i></div>
+                            <div class="arrow-cell"></div>
+                            <div class="arrow-cell down" data-key="S"><i class="fas fa-arrow-down"></i></div>
+                            <div class="arrow-cell"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission Status -->
+                <div class="widget mission">
+                    <div class="widget-header">
+                        <i class="fas fa-satellite"></i>
+                        <h3>MISSION STATUS</h3>
+                    </div>
+                    <div class="mission-progress">
+                        <div class="mission-text">Collect quantum energy. Avoid neural hazards.</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="mission-progress"></div>
+                            </div>
+                            <div class="progress-text">Progress: <span id="progress-percent">0%</span></div>
+                        </div>
+                        <div class="mission-objectives">
+                            <div class="objective">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Collect 50 particles</span>
+                                <span class="objective-count" id="obj-particles">0/50</span>
+                            </div>
+                            <div class="objective">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Reach length 20</span>
+                                <span class="objective-count" id="obj-length">0/20</span>
+                            </div>
+                            <div class="objective">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Survive 5 minutes</span>
+                                <span class="objective-count" id="obj-time">0:00/5:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="bottom-bar">
+                <!-- Combo Display -->
+                <div class="combo-display" id="combo-display">
+                    <div class="combo-label">COMBO</div>
+                    <div class="combo-value" id="combo-value">0x</div>
+                    <div class="combo-multiplier" id="combo-multiplier"></div>
+                </div>
+
+                <!-- Game Messages -->
+                <div class="game-messages">
+                    <div class="message" id="game-message"></div>
+                    <div class="hint" id="game-hint">Use WASD or Arrow Keys to move</div>
+                </div>
+
+                <!-- System Status -->
+                <div class="system-status">
+                    <div class="status-item">
+                        <div class="status-indicator active"></div>
+                        <div class="status-text">QUANTUM FIELD</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator active"></div>
+                        <div class="status-text">NEURAL LINK</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator active"></div>
+                        <div class="status-text">TIME STREAM</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Particle Background -->
-        <div id="particles-js" class="particles-container"></div>
-
-        <!-- Main Interface -->
-        <div class="main-interface">
-            <!-- Header -->
-            <header class="game-header">
-                <div class="header-left">
-                    <div class="logo">
-                        <div class="logo-icon">
-                            <i class="fas fa-infinity"></i>
-                        </div>
-                        <div class="logo-text">
-                            <h1>NEXUS<span class="accent">SNAKE</span></h1>
-                            <p class="tagline">QUANTUM GAMING PLATFORM</p>
-                        </div>
+        <!-- Start Screen -->
+        <div class="screen start-screen" id="start-screen">
+            <div class="screen-content">
+                <div class="title-animation">
+                    <div class="title-text">
+                        <span class="title-char">Q</span>
+                        <span class="title-char">U</span>
+                        <span class="title-char">A</span>
+                        <span class="title-char">N</span>
+                        <span class="title-char">T</span>
+                        <span class="title-char">U</span>
+                        <span class="title-char">M</span>
+                        <span class="title-dash">-</span>
+                        <span class="title-char">S</span>
+                        <span class="title-char">E</span>
+                        <span class="title-char">R</span>
+                        <span class="title-char">P</span>
+                        <span class="title-char">E</span>
+                        <span class="title-char">N</span>
+                        <span class="title-char">T</span>
                     </div>
+                    <div class="title-subtitle">NEURAL NETWORK EDITION</div>
                 </div>
                 
-                <div class="header-center">
-                    <div class="session-info">
-                        <div class="session-item">
-                            <i class="fas fa-user-astronaut"></i>
-                            <span>PLAYER: <strong id="player-name">NEXUS_AGENT_01</strong></span>
-                        </div>
-                        <div class="session-item">
-                            <i class="fas fa-satellite"></i>
-                            <span>SESSION: <strong id="session-id">#NXS-8271</strong></span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="header-right">
-                    <div class="header-controls">
-                        <button id="settings-btn" class="header-btn" title="Settings">
-                            <i class="fas fa-cog"></i>
-                        </button>
-                        <button id="sound-toggle" class="header-btn" title="Sound: ON">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                        <button id="fullscreen-btn" class="header-btn" title="Fullscreen">
-                            <i class="fas fa-expand"></i>
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Main Game Area -->
-            <div class="game-area">
-                <!-- Left Dashboard -->
-                <div class="dashboard left-dashboard">
-                    <!-- Performance Metrics -->
-                    <div class="metric-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-tachometer-alt-fast"></i> PERFORMANCE METRICS</h3>
-                        </div>
-                        <div class="metric-grid">
-                            <div class="metric-card">
-                                <div class="metric-icon fps">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                                <div class="metric-data">
-                                    <div class="metric-label">FPS</div>
-                                    <div class="metric-value" id="fps-counter">60</div>
-                                </div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-icon latency">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div class="metric-data">
-                                    <div class="metric-label">LATENCY</div>
-                                    <div class="metric-value" id="latency-counter">8ms</div>
-                                </div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-icon render">
-                                    <i class="fas fa-layer-group"></i>
-                                </div>
-                                <div class="metric-data">
-                                    <div class="metric-label">RENDER</div>
-                                    <div class="metric-value" id="render-counter">16ms</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Game Statistics -->
-                    <div class="stats-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-chart-network"></i> GAME STATISTICS</h3>
-                        </div>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-bullseye"></i>
-                                    <span>SCORE</span>
-                                </div>
-                                <div class="stat-value" id="score">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-trophy"></i>
-                                    <span>HIGH SCORE</span>
-                                </div>
-                                <div class="stat-value" id="high-score">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-ruler-vertical"></i>
-                                    <span>LENGTH</span>
-                                </div>
-                                <div class="stat-value" id="length">3</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-apple-alt"></i>
-                                    <span>FOOD CONSUMED</span>
-                                </div>
-                                <div class="stat-value" id="food-count">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-clock"></i>
-                                    <span>TIME ELAPSED</span>
-                                </div>
-                                <div class="stat-value" id="time-elapsed">00:00</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">
-                                    <i class="fas fa-brain"></i>
-                                    <span>EFFICIENCY</span>
-                                </div>
-                                <div class="stat-value" id="efficiency">100%</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Power Management -->
-                    <div class="power-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-battery-full"></i> POWER MANAGEMENT</h3>
-                        </div>
-                        <div class="power-grid">
-                            <div class="power-meter">
-                                <div class="power-label">SPEED</div>
-                                <div class="meter-container">
-                                    <div class="meter-fill" id="speed-meter"></div>
-                                    <div class="meter-text" id="speed-text">NORMAL</div>
-                                </div>
-                            </div>
-                            <div class="power-controls">
-                                <button id="speed-down" class="power-btn">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <div class="power-display">
-                                    <span id="speed-level">LEVEL 1</span>
-                                </div>
-                                <button id="speed-up" class="power-btn">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
+                <div class="start-options">
+                    <button class="start-btn" id="start-btn">
+                        <div class="btn-glow"></div>
+                        <i class="fas fa-play"></i>
+                        <span>INITIATE QUANTUM CORE</span>
+                    </button>
+                    
+                    <div class="difficulty-select">
+                        <div class="difficulty-label">NEURAL LOAD</div>
+                        <div class="difficulty-options">
+                            <button class="diff-btn active" data-diff="easy">SIMPLEX</button>
+                            <button class="diff-btn" data-diff="medium">STANDARD</button>
+                            <button class="diff-btn" data-diff="hard">QUANTUM</button>
+                            <button class="diff-btn" data-diff="insane">NEURAL</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Center Game Canvas -->
-                <div class="game-center">
-                    <!-- Game Canvas Container -->
-                    <div class="canvas-container">
-                        <div class="canvas-header">
-                            <div class="game-mode">
-                                <span class="mode-indicator" id="game-mode">CLASSIC MODE</span>
-                                <span class="difficulty" id="difficulty">NORMAL</span>
-                            </div>
-                            <div class="canvas-controls">
-                                <button id="pause-btn" class="canvas-btn">
-                                    <i class="fas fa-pause"></i>
-                                </button>
-                                <button id="restart-btn" class="canvas-btn">
-                                    <i class="fas fa-redo"></i>
-                                </button>
-                                <button id="screenshot-btn" class="canvas-btn">
-                                    <i class="fas fa-camera"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="canvas-wrapper">
-                            <canvas id="game-canvas" width="800" height="800"></canvas>
-                            <div class="canvas-overlay">
-                                <div class="hud-element top-left">
-                                    <div class="hud-item">
-                                        <i class="fas fa-crosshairs"></i>
-                                        <span>COMBO: <span id="combo-counter">x1</span></span>
-                                    </div>
-                                </div>
-                                <div class="hud-element top-right">
-                                    <div class="hud-item">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>SHIELD: <span id="shield-counter">0%</span></span>
-                                    </div>
-                                </div>
-                                <div class="hud-element bottom-left">
-                                    <div class="hud-item">
-                                        <i class="fas fa-bolt"></i>
-                                        <span>BOOST: <span id="boost-counter">100%</span></span>
-                                    </div>
-                                </div>
-                                <div class="hud-element bottom-right">
-                                    <div class="hud-item">
-                                        <i class="fas fa-hourglass-half"></i>
-                                        <span>TIME: <span id="time-counter">∞</span></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="canvas-footer">
-                            <div class="status-bar">
-                                <div class="status-item">
-                                    <i class="fas fa-server"></i>
-                                    <span>ENGINE: <span class="status-value" id="engine-status">READY</span></span>
-                                </div>
-                                <div class="status-item">
-                                    <i class="fas fa-network-wired"></i>
-                                    <span>GRID: <span class="status-value" id="grid-status">ACTIVE</span></span>
-                                </div>
-                                <div class="status-item">
-                                    <i class="fas fa-sync-alt"></i>
-                                    <span>UPDATE: <span class="status-value" id="update-status">LIVE</span></span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="instructions">
+                    <div class="instruction">
+                        <div class="instruction-icon"><i class="fas fa-arrow-up"></i></div>
+                        <div class="instruction-text">Collect <span class="highlight">Quantum Particles</span> to grow</div>
                     </div>
-                </div>
-
-                <!-- Right Dashboard -->
-                <div class="dashboard right-dashboard">
-                    <!-- Mission Control -->
-                    <div class="mission-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-satellite-dish"></i> MISSION CONTROL</h3>
-                        </div>
-                        <div class="mission-info">
-                            <div class="mission-item">
-                                <div class="mission-label">OBJECTIVE</div>
-                                <div class="mission-value" id="objective">Consume quantum particles</div>
-                            </div>
-                            <div class="mission-item">
-                                <div class="mission-label">TARGET</div>
-                                <div class="mission-value" id="target">50 Particles</div>
-                            </div>
-                            <div class="mission-item">
-                                <div class="mission-label">PROGRESS</div>
-                                <div class="progress-bar mission-progress">
-                                    <div class="progress-fill" id="mission-progress"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="instruction">
+                        <div class="instruction-icon"><i class="fas fa-skull-crossbones"></i></div>
+                        <div class="instruction-text">Avoid <span class="highlight">Neural Hazards</span></div>
                     </div>
-
-                    <!-- Power-ups Inventory -->
-                    <div class="inventory-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-cube"></i> POWER CORE INVENTORY</h3>
-                        </div>
-                        <div class="inventory-grid">
-                            <div class="inventory-item" data-type="shield">
-                                <div class="inventory-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="inventory-count" id="shield-count">0</div>
-                                <div class="inventory-name">SHIELD</div>
-                            </div>
-                            <div class="inventory-item" data-type="speed">
-                                <div class="inventory-icon">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                </div>
-                                <div class="inventory-count" id="speed-count">0</div>
-                                <div class="inventory-name">SPEED</div>
-                            </div>
-                            <div class="inventory-item" data-type="time">
-                                <div class="inventory-icon">
-                                    <i class="fas fa-hourglass"></i>
-                                </div>
-                                <div class="inventory-count" id="time-count">0</div>
-                                <div class="inventory-name">TIME</div>
-                            </div>
-                            <div class="inventory-item" data-type="multiplier">
-                                <div class="inventory-icon">
-                                    <i class="fas fa-times-circle"></i>
-                                </div>
-                                <div class="inventory-count" id="multiplier-count">0</div>
-                                <div class="inventory-name">MULTIPLIER</div>
-                            </div>
-                        </div>
+                    <div class="instruction">
+                        <div class="instruction-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="instruction-text">Use <span class="highlight">Power Systems</span> for advantage</div>
                     </div>
-
-                    <!-- Live Analytics -->
-                    <div class="analytics-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-chart-line"></i> LIVE ANALYTICS</h3>
-                        </div>
-                        <div class="analytics-content">
-                            <div class="analytics-item">
-                                <div class="analytics-label">MOVES PER MINUTE</div>
-                                <div class="analytics-value" id="moves-per-minute">0</div>
-                            </div>
-                            <div class="analytics-item">
-                                <div class="analytics-label">PRECISION</div>
-                                <div class="analytics-value" id="precision">100%</div>
-                            </div>
-                            <div class="analytics-item">
-                                <div class="analytics-label">CHAIN REACTIONS</div>
-                                <div class="analytics-value" id="chain-reactions">0</div>
-                            </div>
-                            <div class="analytics-item">
-                                <div class="analytics-label">NEAR MISSES</div>
-                                <div class="analytics-value" id="near-misses">0</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Leaderboard Preview -->
-                    <div class="leaderboard-preview">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-crown"></i> GLOBAL RANKINGS</h3>
-                        </div>
-                        <div class="leaderboard-list">
-                            <div class="leaderboard-item">
-                                <span class="rank">1</span>
-                                <span class="player">QUANTUM_SNAKE</span>
-                                <span class="score">9,847</span>
-                            </div>
-                            <div class="leaderboard-item current">
-                                <span class="rank">-</span>
-                                <span class="player">YOU</span>
-                                <span class="score" id="current-rank">0</span>
-                            </div>
-                            <div class="leaderboard-item">
-                                <span class="rank">2</span>
-                                <span class="player">NEXUS_MASTER</span>
-                                <span class="score">8,921</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Game Controls -->
-            <div class="game-controls">
-                <div class="controls-left">
-                    <div class="control-group">
-                        <div class="control-label">MOVEMENT</div>
-                        <div class="control-keys">
-                            <div class="key-row">
-                                <div class="key key-arrow" data-key="up">
-                                    <i class="fas fa-arrow-up"></i>
-                                </div>
-                            </div>
-                            <div class="key-row">
-                                <div class="key key-arrow" data-key="left">
-                                    <i class="fas fa-arrow-left"></i>
-                                </div>
-                                <div class="key key-arrow" data-key="down">
-                                    <i class="fas fa-arrow-down"></i>
-                                </div>
-                                <div class="key key-arrow" data-key="right">
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="controls-center">
-                    <div class="control-group">
-                        <div class="control-label">ACTIONS</div>
-                        <div class="action-buttons">
-                            <button id="start-game" class="action-btn primary">
-                                <i class="fas fa-play"></i>
-                                <span>LAUNCH SEQUENCE</span>
-                            </button>
-                            <button id="use-powerup" class="action-btn secondary">
-                                <i class="fas fa-bolt"></i>
-                                <span>ACTIVATE POWER</span>
-                            </button>
-                            <button id="auto-pilot" class="action-btn tertiary">
-                                <i class="fas fa-robot"></i>
-                                <span>AUTO-PILOT</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="controls-right">
-                    <div class="control-group">
-                        <div class="control-label">QUICK ACTIONS</div>
-                        <div class="quick-keys">
-                            <div class="key key-function" data-key="space">
-                                <i class="fas fa-pause"></i>
-                                <span>PAUSE</span>
-                            </div>
-                            <div class="key key-function" data-key="r">
-                                <i class="fas fa-redo"></i>
-                                <span>RESTART</span>
-                            </div>
-                            <div class="key key-function" data-key="m">
-                                <i class="fas fa-map"></i>
-                                <span>MAP</span>
-                            </div>
-                        </div>
+                    <div class="instruction">
+                        <div class="instruction-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="instruction-text">Speed <span class="highlight">increases over time</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Game Over Screen -->
-        <div id="game-over-screen" class="game-over-screen">
-            <div class="game-over-content">
-                <div class="game-over-header">
-                    <div class="result-icon">
-                        <i class="fas fa-skull-crossbones"></i>
-                    </div>
-                    <h2>MISSION TERMINATED</h2>
-                    <p class="result-subtitle">Quantum anomaly detected</p>
+        <div class="screen game-over-screen" id="game-over-screen">
+            <div class="screen-content">
+                <div class="game-over-title">
+                    <div class="title-main">NEURAL COLLAPSE</div>
+                    <div class="title-sub">QUANTUM LINK TERMINATED</div>
                 </div>
                 
-                <div class="result-stats">
-                    <div class="result-stat">
-                        <span class="stat-label">FINAL SCORE</span>
-                        <span class="stat-value" id="final-score">0</span>
+                <div class="game-over-stats">
+                    <div class="stat-row">
+                        <div class="stat-box">
+                            <div class="stat-label">FINAL SCORE</div>
+                            <div class="stat-value-large" id="final-score">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">TIME ALIVE</div>
+                            <div class="stat-value-large" id="final-time">00:00</div>
+                        </div>
                     </div>
-                    <div class="result-stat">
-                        <span class="stat-label">MISSION TIME</span>
-                        <span class="stat-value" id="final-time">00:00</span>
-                    </div>
-                    <div class="result-stat">
-                        <span class="stat-label">PARTICLES COLLECTED</span>
-                        <span class="stat-value" id="final-particles">0</span>
-                    </div>
-                    <div class="result-stat">
-                        <span class="stat-label">EFFICIENCY RATING</span>
-                        <span class="stat-value" id="final-efficiency">0%</span>
+                    <div class="stat-row">
+                        <div class="stat-box">
+                            <div class="stat-label">PARTICLES</div>
+                            <div class="stat-value" id="final-particles">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">MAX LENGTH</div>
+                            <div class="stat-value" id="final-length">3</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">MAX SPEED</div>
+                            <div class="stat-value" id="final-speed">1.0x</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">MAX COMBO</div>
+                            <div class="stat-value" id="final-combo">0</div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="result-actions">
-                    <button id="restart-game" class="result-btn primary">
+
+                <div class="game-over-buttons">
+                    <button class="action-btn restart" id="restart-btn-final">
                         <i class="fas fa-redo"></i>
-                        <span>REINITIALIZE SEQUENCE</span>
+                        <span>QUANTUM RESTART</span>
                     </button>
-                    <button id="main-menu" class="result-btn secondary">
+                    <button class="action-btn menu" id="menu-btn">
+                        <i class="fas fa-home"></i>
+                        <span>NEURAL HUB</span>
+                    </button>
+                    <button class="action-btn share" id="share-btn">
+                        <i class="fas fa-share"></i>
+                        <span>TRANSMIT DATA</span>
+                    </button>
+                </div>
+
+                <div class="performance-review">
+                    <div class="review-title">NEURAL PERFORMANCE ANALYSIS</div>
+                    <div class="review-metrics">
+                        <div class="review-metric">
+                            <div class="metric-name">REACTION TIME</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 85%"></div>
+                            </div>
+                            <div class="metric-value">85%</div>
+                        </div>
+                        <div class="review-metric">
+                            <div class="metric-name">SPATIAL AWARENESS</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 72%"></div>
+                            </div>
+                            <div class="metric-value">72%</div>
+                        </div>
+                        <div class="review-metric">
+                            <div class="metric-name">QUANTUM EFFICIENCY</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 91%"></div>
+                            </div>
+                            <div class="metric-value">91%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Screen -->
+        <div class="screen pause-screen" id="pause-screen">
+            <div class="screen-content">
+                <div class="pause-title">
+                    <i class="fas fa-pause"></i>
+                    <div class="title-text">QUANTUM PAUSE</div>
+                </div>
+                <div class="pause-stats">
+                    <div class="pause-stat">
+                        <div class="stat-name">Current Score</div>
+                        <div class="stat-value" id="pause-score">0</div>
+                    </div>
+                    <div class="pause-stat">
+                        <div class="stat-name">Time Alive</div>
+                        <div class="stat-value" id="pause-time">00:00</div>
+                    </div>
+                    <div class="pause-stat">
+                        <div class="stat-name">Particles</div>
+                        <div class="stat-value" id="pause-particles">0</div>
+                    </div>
+                </div>
+                <div class="pause-buttons">
+                    <button class="pause-btn resume" id="resume-btn">
+                        <i class="fas fa-play"></i>
+                        <span>RESUME SIMULATION</span>
+                    </button>
+                    <button class="pause-btn restart" id="pause-restart-btn">
+                        <i class="fas fa-redo"></i>
+                        <span>RESTART FROM CHECKPOINT</span>
+                    </button>
+                    <button class="pause-btn menu" id="pause-menu-btn">
                         <i class="fas fa-home"></i>
                         <span>RETURN TO HUB</span>
                     </button>
-                    <button id="share-score" class="result-btn tertiary">
-                        <i class="fas fa-share-alt"></i>
-                        <span>SHARE RESULTS</span>
-                    </button>
-                </div>
-                
-                <div class="result-ranking">
-                    <h3>PERFORMANCE ANALYSIS</h3>
-                    <div class="ranking-badge" id="ranking-badge">
-                        <span class="rank-title">QUANTUM NOVICE</span>
-                        <span class="rank-score">Score: 0</span>
-                    </div>
-                    <p class="rank-message">You're 2,847 points away from the next rank</p>
                 </div>
             </div>
         </div>
-
-        <!-- Settings Modal -->
-        <div id="settings-modal" class="settings-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2><i class="fas fa-sliders-h"></i> QUANTUM SETTINGS</h2>
-                    <button id="close-settings" class="modal-close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="modal-body">
-                    <div class="settings-tabs">
-                        <div class="tab active" data-tab="gameplay">GAMEPLAY</div>
-                        <div class="tab" data-tab="graphics">GRAPHICS</div>
-                        <div class="tab" data-tab="audio">AUDIO</div>
-                        <div class="tab" data-tab="controls">CONTROLS</div>
-                    </div>
-                    
-                    <div class="settings-content">
-                        <div class="tab-content active" id="gameplay-tab">
-                            <!-- Gameplay settings content -->
-                            <div class="setting-item">
-                                <label for="difficulty-setting">DIFFICULTY LEVEL</label>
-                                <select id="difficulty-setting">
-                                    <option value="easy">NOVICE</option>
-                                    <option value="normal" selected>OPERATIVE</option>
-                                    <option value="hard">ELITE</option>
-                                    <option value="expert">QUANTUM</option>
-                                </select>
-                            </div>
-                            <div class="setting-item">
-                                <label for="game-mode-setting">GAME MODE</label>
-                                <select id="game-mode-setting">
-                                    <option value="classic">CLASSIC</option>
-                                    <option value="time-attack">TIME ATTACK</option>
-                                    <option value="survival">SURVIVAL</option>
-                                    <option value="zen">ZEN MODE</option>
-                                </select>
-                            </div>
-                            <div class="setting-item">
-                                <label>
-                                    <input type="checkbox" id="grid-lines" checked>
-                                    SHOW GRID LINES
-                                </label>
-                            </div>
-                        </div>
-                        <!-- Other tabs would have similar content -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notifications -->
-        <div class="notification-container" id="notification-container"></div>
     </div>
 
-    <!-- External Libraries -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Audio -->
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="collect-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="powerup-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gameover-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-electricity-buzz-955.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="game.js"></script>
 </body>
 </html>
